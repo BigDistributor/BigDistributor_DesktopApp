@@ -1,13 +1,10 @@
-package com.bigdistributor.dataexchange.spark;
+package com.bigdistributor.distributor.aws.spark;
 
 
-import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.ListObjectsV2Result;
-import com.amazonaws.services.s3.model.S3ObjectSummary;
 import com.bigdistributor.dataexchange.aws.s3.model.S3ClientInstance;
 import com.bigdistributor.dataexchange.job.model.JobID;
-import com.bigdistributor.dataexchange.spark.interf.SparkTask;
 import com.bigdistributor.dataexchange.utils.DEFAULT;
+import com.bigdistributor.distributor.aws.spark.interf.SparkTask;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.spark.SparkConf;
@@ -53,13 +50,10 @@ public class MainSpark implements Callable<Void> {
                 .set("spark.serializer", "org.apache.spark.serializer.KryoSerializer")
         );
 
-        AmazonS3 s3 = S3ClientInstance.get();
+//        AmazonS3 s3 = S3ClientInstance.get();
         JobID.set(DEFAULT.id);
-        ListObjectsV2Result result = s3.listObjectsV2(JobID.get());
-        List<S3ObjectSummary> objects = result.getObjectSummaries();
-        for (S3ObjectSummary os : objects) {
-            System.out.println("* " + os.getKey());
-        }
+        S3ClientInstance.showAll();
+
 
 //        N5AmazonS3Reader reader = new N5AmazonS3Reader(s3, DEFAULT.id);
 //

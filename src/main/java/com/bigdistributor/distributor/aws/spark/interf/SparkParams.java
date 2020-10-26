@@ -1,4 +1,4 @@
-package com.bigdistributor.dataexchange.spark.interf;
+package com.bigdistributor.distributor.aws.spark.interf;
 
 public class SparkParams {
 }

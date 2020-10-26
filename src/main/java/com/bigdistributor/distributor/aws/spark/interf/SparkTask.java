@@ -1,4 +1,4 @@
-package com.bigdistributor.dataexchange.spark.interf;
+package com.bigdistributor.distributor.aws.spark.interf;
 
 import com.amazonaws.util.EC2MetadataUtils;
 import org.apache.spark.api.java.function.VoidFunction;

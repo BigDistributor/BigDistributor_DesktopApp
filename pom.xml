@@ -1,158 +1,183 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>org.scijava</groupId>
-        <artifactId>pom-scijava</artifactId>
-        <version>29.2.1</version>
-        <relativePath/>
-    </parent>
+	<parent>
+		<groupId>org.scijava</groupId>
+		<artifactId>pom-scijava</artifactId>
+		<version>29.2.1</version>
+		<relativePath />
+	</parent>
 
-    <groupId>com.bigdistributor</groupId>
-    <artifactId>BD_Distributor</artifactId>
-    <version>1.0-SNAPSHOT</version>
+	<groupId>com.bigdistributor</groupId>
+	<artifactId>BD_Distributor</artifactId>
+	<version>1.0-SNAPSHOT</version>
 
-    <name>Big Distributor Job Manager </name>
-    <description>.</description>
-    <url>https://github.com/BigDistributor</url>
-    <inceptionYear>2020</inceptionYear>
-
-
-    <organization>
-        <name>Preibisch Lab</name>
-        <url>https://preibischlab.mdc-berlin.de/</url>
-    </organization>
-    <licenses>
-        <license>
-            <name>Simplified BSD License</name>
-            <distribution>repo</distribution>
-        </license>
-    </licenses>
-
-    <developers>
-        <developer>
-            <id>mzouink</id>
-            <name>Marwan Zouinkhi</name>
-            <url>https://imagej.net/User:mzouink</url>
-            <roles>
-                <role>founder</role>
-                <role>lead</role>
-                <role>developer</role>
-                <role>debugger</role>
-                <role>reviewer</role>
-                <role>support</role>
-                <role>maintainer</role>
-            </roles>
-        </developer>
-    </developers>
-    <contributors>
-        <contributor>
-            <name>None</name>
-        </contributor>
-    </contributors>
-
-    <mailingLists>
-        <mailingList>
-            <name>Image.sc Forum</name>
-            <archive>None</archive>
-        </mailingList>
-    </mailingLists>
-
-    <scm>
-        <connection>scm:git:git://github.com/BigDistributor/BD_Distributor</connection>
-        <developerConnection>scm:git:git@github.com:BigDistributor/BD_Distributor</developerConnection>
-        <tag>HEAD</tag>
-        <url>https://github.com/BigDistributor/BD_Distributor</url>
-    </scm>
-    <issueManagement>
-        <system>GitHub</system>
-        <url>https://github.com/BigDistributor/BD_Distributor/issues</url>
-    </issueManagement>
-    <ciManagement>
-        <system>Travis CI</system>
-        <url>https://travis-ci.org/BigDistributor/BD_Distributor</url>
-    </ciManagement>
+	<name>Big Distributor Job Manager </name>
+	<description>.</description>
+	<url>https://github.com/BigDistributor</url>
+	<inceptionYear>2020</inceptionYear>
 
 
-    <properties>
-        <license.licenseName>bsd_2</license.licenseName>
-        <license.projectName>BigDistributor</license.projectName>
-        <license.organizationName>Preibisch Lab</license.organizationName>
-        <license.copyrightOwners>Marwan Zouinkhi, Stephan Preibisch</license.copyrightOwners>
+	<organization>
+		<name>Preibisch Lab</name>
+		<url>https://preibischlab.mdc-berlin.de/</url>
+	</organization>
+	<licenses>
+		<license>
+			<name>Simplified BSD License</name>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
 
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-    </properties>
+	<developers>
+		<developer>
+			<id>mzouink</id>
+			<name>Marwan Zouinkhi</name>
+			<url>https://imagej.net/User:mzouink</url>
+			<roles>
+				<role>founder</role>
+				<role>lead</role>
+				<role>developer</role>
+				<role>debugger</role>
+				<role>reviewer</role>
+				<role>support</role>
+				<role>maintainer</role>
+			</roles>
+		</developer>
+	</developers>
+	<contributors>
+		<contributor>
+			<name>None</name>
+		</contributor>
+	</contributors>
 
-    <repositories>
-        <!-- NB: for project parent -->
-        <repository>
-            <id>imagej.public</id>
-            <url>http://maven.imagej.net/content/groups/public</url>
-        </repository>
+	<mailingLists>
+		<mailingList>
+			<name>Image.sc Forum</name>
+			<archive>None</archive>
+		</mailingList>
+	</mailingLists>
 
-    </repositories>
+	<scm>
+		<connection>scm:git:git://github.com/BigDistributor/BD_Distributor</connection>
+		<developerConnection>scm:git:git@github.com:BigDistributor/BD_Distributor</developerConnection>
+		<tag>HEAD</tag>
+		<url>https://github.com/BigDistributor/BD_Distributor</url>
+	</scm>
+	<issueManagement>
+		<system>GitHub</system>
+		<url>https://github.com/BigDistributor/BD_Distributor/issues</url>
+	</issueManagement>
+	<ciManagement>
+		<system>Travis CI</system>
+		<url>https://travis-ci.org/BigDistributor/BD_Distributor</url>
+	</ciManagement>
 
-    <dependencies>
-        <!-- https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk-emr -->
-        <dependency>
-            <groupId>com.amazonaws</groupId>
-            <artifactId>aws-java-sdk-emr</artifactId>
-            <version>1.11.877</version>
-        </dependency>
+
+	<properties>
+		<license.licenseName>bsd_2</license.licenseName>
+		<license.projectName>BigDistributor</license.projectName>
+		<license.organizationName>Preibisch Lab</license.organizationName>
+		<license.copyrightOwners>Marwan Zouinkhi, Stephan Preibisch</license.copyrightOwners>
+
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+	</properties>
+
+	<repositories>
+		<!-- NB: for project parent -->
+		<repository>
+			<id>imagej.public</id>
+			<url>http://maven.imagej.net/content/groups/public</url>
+		</repository>
+
+	</repositories>
+
+	<dependencies>
+		<!-- Resolve conflicts libs -->
+		<!-- https://mvnrepository.com/artifact/io.netty/netty-all -->
+		<dependency>
+			<groupId>io.netty</groupId>
+			<artifactId>netty-all</artifactId>
+			<version>4.1.45.Final</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/io.netty/netty -->
+		<dependency>
+			<groupId>io.netty</groupId>
+			<artifactId>netty</artifactId>
+			<version>3.8.0.Final</version>
+		</dependency>
 
 
-        <!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>23.0</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/log4j/log4j -->
-        <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>1.2.17</version>
-        </dependency>
+		<!-- https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk-emr -->
+		<dependency>
+			<groupId>com.amazonaws</groupId>
+			<artifactId>aws-java-sdk-emr</artifactId>
+			<version>1.11.877</version>
+			<exclusions>
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
 
-        <dependency>
-            <groupId>info.picocli</groupId>
-            <artifactId>picocli</artifactId>
-            <version>3.9.2</version>
-        </dependency>
-        <!--        Spark       -->
-        <dependency>
-            <groupId>org.apache.spark</groupId>
-            <artifactId>spark-core_2.10</artifactId>
-            <version>2.0.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.spark</groupId>
-            <artifactId>spark-sql_2.10</artifactId>
-            <version>2.1.0</version>
-        </dependency>
 
-        <dependency>
-            <groupId>com.bigdistributor</groupId>
-            <artifactId>BD_DataExchange</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
+		<!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>23.0</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/log4j/log4j -->
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
+		</dependency>
 
-    </dependencies>
+		<dependency>
+			<groupId>info.picocli</groupId>
+			<artifactId>picocli</artifactId>
+			<version>3.9.2</version>
+		</dependency>
+		<!-- Spark -->
+		<!-- https://mvnrepository.com/artifact/org.apache.spark/spark-core -->
+		<dependency>
+			<groupId>org.apache.spark</groupId>
+			<artifactId>spark-core_2.12</artifactId>
+			<version>3.0.1</version>
+		</dependency>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
-                <configuration>
-                    <source>8</source>
-                    <target>8</target>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+		<!-- https://mvnrepository.com/artifact/org.apache.spark/spark-sql -->
+		<dependency>
+			<groupId>org.apache.spark</groupId>
+			<artifactId>spark-sql_2.12</artifactId>
+			<version>3.0.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.bigdistributor</groupId>
+			<artifactId>BD_DataExchange</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.1</version>
+				<configuration>
+					<source>8</source>
+					<target>8</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>
