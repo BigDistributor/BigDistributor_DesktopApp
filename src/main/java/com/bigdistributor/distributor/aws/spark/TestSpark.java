@@ -4,40 +4,49 @@ package com.bigdistributor.distributor.aws.spark;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.spark.SparkConf;
+import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
+import org.apache.spark.api.java.function.Function;
+import org.apache.spark.api.java.function.Function2;
 
-import com.bigdistributor.distributor.aws.spark.interf.SparkTask;
-
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.LongStream;
-
-public class TestSpark {
 
 
-    private static final int MAX_PARTITIONS = 15000;
+public final class TestSpark {
 
+	public static void main(String[] args) throws Exception {
 
-    public static void main(String[] args) throws Exception {
-        Logger.getLogger("org").setLevel(Level.ERROR);
+		Logger.getLogger("org").setLevel(Level.ERROR);
 
-        final JavaSparkContext sparkContext = new JavaSparkContext(new SparkConf()
-                .setAppName("N5ConvertSpark")
-                .set("spark.serializer", "org.apache.spark.serializer.KryoSerializer")
-        );
+		SparkConf sparkConf = new SparkConf().setAppName("JavaSparkPi").setMaster("local[1]");
+		JavaSparkContext jsc = new JavaSparkContext(sparkConf);
 
-//        AmazonS3 s3 = S3ClientInstance.get();
-//        JobID.set(DEFAULT.id);
-//        ListObjectsV2Result result = s3.listObjectsV2(JobID.get());
-//        List<S3ObjectSummary> objects = result.getObjectSummaries();
-//        for (S3ObjectSummary os : objects) {
-//            System.out.println("* " + os.getKey());
-//        }
+		int slices = (args.length == 1) ? Integer.parseInt(args[0]) : 2;
+		int n = 100000 * slices;
+		List<Integer> l = new ArrayList<Integer>(n);
+		for (int i = 0; i < n; i++) {
+			l.add(i);
+		}
 
-        final List<Long> outputBlockIndexes = LongStream.range(0, 1000).boxed().collect(Collectors.toList());
+		JavaRDD<Integer> dataSet = jsc.parallelize(l, slices);
 
-        sparkContext.parallelize(outputBlockIndexes, Math.min(outputBlockIndexes.size(), MAX_PARTITIONS)).foreach(new SparkTask());
+		int count = dataSet.map(new Function<Integer, Integer>() {
+			@Override
+			public Integer call(Integer integer) {
+				double x = Math.random() * 2 - 1;
+				double y = Math.random() * 2 - 1;
+				return (x * x + y * y < 1) ? 1 : 0;
+			}
+		}).reduce(new Function2<Integer, Integer, Integer>() {
+			@Override
+			public Integer call(Integer integer, Integer integer2) {
+				return integer + integer2;
+			}
+		});
 
-    }
+		System.out.println("Pi is roughly " + 4.0 * count / n);
 
+		jsc.stop();
+	}
 }
