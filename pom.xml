@@ -12,11 +12,11 @@
 	</parent>
 
 	<groupId>com.bigdistributor</groupId>
-	<artifactId>BD_Distributor</artifactId>
+	<artifactId>BD_Task</artifactId>
 	<version>1.0-SNAPSHOT</version>
 
-	<name>Big Distributor Job Manager</name>
-	<description>.</description>
+	<name>Maven Task AWS</name>
+	<description>Needed library for task, just import and impliment</description>
 	<url>https://github.com/BigDistributor</url>
 	<inceptionYear>2020</inceptionYear>
 
@@ -97,79 +97,9 @@
 	</repositories>
 
 	<dependencies>
-		<!-- Resolve conflicts libs -->
-		<!-- https://mvnrepository.com/artifact/io.netty/netty-all -->
-		<dependency>
-			<groupId>io.netty</groupId>
-			<artifactId>netty-all</artifactId>
-			<version>4.1.45.Final</version>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/io.netty/netty -->
-		<dependency>
-			<groupId>io.netty</groupId>
-			<artifactId>netty</artifactId>
-			<version>3.8.0.Final</version>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-databind</artifactId>
-			<version>2.10.5</version>
-		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/log4j/log4j -->
-		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>1.2.17</version>
-		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk-emr -->
-		<dependency>
-			<groupId>com.amazonaws</groupId>
-			<artifactId>aws-java-sdk-emr</artifactId>
-			<version>1.11.877</version>
-			<exclusions>
-				<exclusion>
-					<groupId>commons-logging</groupId>
-					<artifactId>commons-logging</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-
-
-		<!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
-		<dependency>
-			<groupId>com.google.guava</groupId>
-			<artifactId>guava</artifactId>
-			<version>23.0</version>
-		</dependency>
-
-
-		<dependency>
-			<groupId>info.picocli</groupId>
-			<artifactId>picocli</artifactId>
-			<version>3.9.2</version>
-		</dependency>
-		<!-- Spark -->
-		<!-- https://mvnrepository.com/artifact/org.apache.spark/spark-core -->
-		<dependency>
-			<groupId>org.apache.spark</groupId>
-			<artifactId>spark-core_2.12</artifactId>
-			<version>3.0.1</version>
-		</dependency>
-
-
-		<!-- https://mvnrepository.com/artifact/org.apache.spark/spark-sql -->
-<!-- 		<dependency>
-			<groupId>org.apache.spark</groupId>
-			<artifactId>spark-sql_2.12</artifactId>
-			<version>3.0.1</version>
-		</dependency> -->
-
 		<dependency>
 			<groupId>com.bigdistributor</groupId>
-			<artifactId>BD_DataExchange</artifactId>
+			<artifactId>BD_Distributor</artifactId>
 			<version>1.0-SNAPSHOT</version>
 		</dependency>
 
@@ -180,26 +110,11 @@
 			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>
 				<configuration>
-					<archive>
-						<manifest>
-							<mainClass>com.bigdistributor.distributor.aws.spark.TestSparkLocal</mainClass>
-						</manifest>
-					</archive>
 					<descriptorRefs>
 						<descriptorRef>jar-with-dependencies</descriptorRef>
 					</descriptorRefs>
 				</configuration>
 			</plugin>
-
-			<!-- <plugin> -->
-			<!-- <groupId>org.apache.maven.plugins</groupId> -->
-			<!-- <artifactId>maven-compiler-plugin</artifactId> -->
-			<!-- <version>3.8.1</version> -->
-			<!-- <configuration> -->
-			<!-- <source>8</source> -->
-			<!-- <target>8</target> -->
-			<!-- </configuration> -->
-			<!-- </plugin> -->
 		</plugins>
 	</build>
 </project>
