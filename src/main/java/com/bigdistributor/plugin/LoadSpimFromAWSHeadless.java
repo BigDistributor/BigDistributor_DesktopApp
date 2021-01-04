@@ -17,7 +17,7 @@ import org.jdom2.JDOMException;
 import javax.xml.stream.XMLStreamException;
 import java.io.IOException;
 
-public class LoadSpimFromAWS {
+public class LoadSpimFromAWSHeadless {
 
     public static void main(String[] args) throws SpimDataException, IllegalAccessException, JDOMException, XMLStreamException, IOException {
 
