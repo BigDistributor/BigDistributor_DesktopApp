@@ -9,7 +9,7 @@
     <version>1.0-SNAPSHOT</version>
 
     <name>Maven Task AWS</name>
-    <description>Needed library for task, just import and impliment</description>
+    <description>Needed library for task, just import and implement</description>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -25,7 +25,7 @@
     <dependencies>
         <dependency>
             <groupId>com.bigdistributor</groupId>
-            <artifactId>BD_DataExchange</artifactId>
+            <artifactId>BigDistributor_AWS</artifactId>
             <version>0.2-SNAPSHOT</version>
         </dependency>
         <dependency>

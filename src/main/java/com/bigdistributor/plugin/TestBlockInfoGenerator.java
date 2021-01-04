@@ -1,8 +1,8 @@
 package com.bigdistributor.plugin;
 
-import com.bigdistributor.controllers.blockmanagement.blockinfo.BasicBlockInfo;
-import com.bigdistributor.controllers.blockmanagement.blockinfo.BasicBlockInfoGenerator;
-import com.bigdistributor.controllers.blockmanagement.blockinfo.BlockInfoGenerator;
+import com.bigdistributor.core.blockmanagement.blockinfo.BasicBlockInfo;
+import com.bigdistributor.core.blockmanagement.blockinfo.BasicBlockInfoGenerator;
+import com.bigdistributor.core.blockmanagement.blockinfo.BlockInfoGenerator;
 import com.bigdistributor.io.mvrecon.SpimHelpers;
 import net.imglib2.Cursor;
 import net.imglib2.img.Img;

@@ -2,33 +2,26 @@ package com.bigdistributor.plugin;
 
 import bdv.img.awsspim.AWSSpimImageLoader;
 import com.amazonaws.regions.Regions;
-import com.bigdistributor.dataexchange.aws.s3.func.auth.AWSCredentialInstance;
-import com.bigdistributor.dataexchange.aws.s3.func.bucket.S3BucketInstance;
-import com.bigdistributor.dataexchange.job.model.JobID;
-import com.bigdistributor.dataexchange.utils.DEFAULT;
-import com.bigdistributor.aws.spimloader.AWSSpimReader;
-import mpicbg.spim.data.SpimDataException;
+import com.bigdistributor.aws.dataexchange.aws.s3.func.auth.AWSCredentialInstance;
+import com.bigdistributor.aws.dataexchange.aws.s3.func.bucket.S3BucketInstance;
+import com.bigdistributor.aws.dataexchange.utils.DEFAULT;
+import com.bigdistributor.aws.spimloader.AWSSpimLoader;
 import net.imglib2.RandomAccessibleInterval;
 import net.imglib2.img.display.imagej.ImageJFunctions;
 import net.imglib2.type.numeric.integer.UnsignedShortType;
 import net.preibisch.mvrecon.fiji.spimdata.SpimData2;
-import org.jdom2.JDOMException;
-
-import javax.xml.stream.XMLStreamException;
-import java.io.IOException;
 
 public class LoadSpimFromAWSHeadless {
 
-    public static void main(String[] args) throws SpimDataException, IllegalAccessException, JDOMException, XMLStreamException, IOException {
+    public static void main(String[] args) throws IllegalAccessException {
 
           // Init S3
-        JobID.set(DEFAULT.bucket_name);
         AWSCredentialInstance.init(DEFAULT.AWS_CREDENTIALS_PATH);
 
-        S3BucketInstance.init(AWSCredentialInstance.get(), Regions.EU_CENTRAL_1, DEFAULT.id);
+        S3BucketInstance.init(AWSCredentialInstance.get(), Regions.EU_CENTRAL_1, DEFAULT.bucket_name);
 
         // Init XML
-        AWSSpimReader reader = new AWSSpimReader(S3BucketInstance.get(),"","dataset-n5.xml");
+        AWSSpimLoader reader = new AWSSpimLoader(S3BucketInstance.get(),"","dataset-n5.xml");
 
         //Init Spim
 
