@@ -1,4 +1,4 @@
-package com.bigdistributor.spimdata.aws.test;
+package com.bigdistributor.plugin;
 
 import bdv.img.awsspim.AWSSpimImageLoader;
 import com.amazonaws.regions.Regions;
@@ -6,12 +6,12 @@ import com.bigdistributor.dataexchange.aws.s3.func.auth.AWSCredentialInstance;
 import com.bigdistributor.dataexchange.aws.s3.func.bucket.S3BucketInstance;
 import com.bigdistributor.dataexchange.job.model.JobID;
 import com.bigdistributor.dataexchange.utils.DEFAULT;
+import com.bigdistributor.aws.spimloader.AWSSpimReader;
 import mpicbg.spim.data.SpimDataException;
 import net.imglib2.RandomAccessibleInterval;
 import net.imglib2.img.display.imagej.ImageJFunctions;
 import net.imglib2.type.numeric.integer.UnsignedShortType;
 import net.preibisch.mvrecon.fiji.spimdata.SpimData2;
-import net.preibisch.stitcher.aws.reader.AWSSpimReader;
 import org.jdom2.JDOMException;
 
 import javax.xml.stream.XMLStreamException;
@@ -32,7 +32,7 @@ public class LoadSpimFromAWS {
 
         //Init Spim
 
-        SpimData2 data = reader.getSpim();
+        SpimData2 data = reader.getSpimdata();
 
         System.out.println("Class: " + data.getSequenceDescription().getImgLoader().getClass());
 

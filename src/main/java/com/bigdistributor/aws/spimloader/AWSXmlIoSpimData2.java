@@ -1,4 +1,4 @@
-package com.bigdistributor.spimdata.aws.reader;
+package com.bigdistributor.aws.spimloader;
 
 
 import com.amazonaws.regions.Regions;
@@ -39,7 +39,7 @@ public class AWSXmlIoSpimData2<S extends AbstractSequenceDescription<?, ?, ?>, T
     }
 
     public SpimData2 load() throws SpimDataException, JDOMException, XMLStreamException, IOException {
-        return awsio.getSpim();
+        return awsio.getSpimdata();
     }
 
 

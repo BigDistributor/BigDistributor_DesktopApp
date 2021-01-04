@@ -1,4 +1,4 @@
-package com.bigdistributor.spimdata.aws.test;
+package com.bigdistributor.plugin;
 
 import mpicbg.spim.data.sequence.ImgLoader;
 import net.preibisch.mvrecon.fiji.plugin.queryXML.LoadParseQueryXML;

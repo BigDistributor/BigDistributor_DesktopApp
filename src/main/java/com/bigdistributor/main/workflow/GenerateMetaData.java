@@ -1,5 +1,6 @@
 //package com.bigdistributor.main.workflow;
 //
+//import com.bigdistributor.aws.spimloader.SpimDataLoader;
 //import com.bigdistributor.controllers.blockmanagement.blockinfo.BasicBlockInfo;
 //import com.bigdistributor.controllers.blockmanagement.blockinfo.BasicBlockInfoGenerator;
 //import com.bigdistributor.core.task.items.Job;
@@ -8,6 +9,7 @@
 //import mpicbg.spim.data.SpimDataException;
 //import net.preibisch.mvrecon.fiji.spimdata.SpimData2;
 //import net.preibisch.mvrecon.fiji.spimdata.XmlIoSpimData2;
+//import net.preibisch.mvrecon.fiji.spimdata.boundingbox.BoundingBox;
 //
 //import java.io.File;
 //import java.io.IOException;
@@ -16,11 +18,37 @@
 //import java.util.Map;
 //
 //public class GenerateMetaData {
-//    //
-//	private static final String BATCH_NAME = "_submit.cmd";
-//	private static final String TASK_SHELL_NAME = "_task.sh";
 //
-//	public static void run(List<ParamsJsonSerialzer<?>> params, String input, TaskType type, Interval interval) throws SpimDataException, IOException, JSchException, SftpException {
+//	private final SpimDataLoader loader;
+//	private BoundingBox bb;
+//
+//	public GenerateMetaData(SpimDataLoader loader) {
+//    	this.loader = loader;
+//    }
+//
+//	public void setBb(BoundingBox bb) {
+//		this.bb = bb;
+//	}
+//
+//	public BoundingBox generate(){
+//		if( bb == null){
+//			BoundingBoxManager manager = new BoundingBoxManager(loader.getSpimdata());
+//			bb =  manager.getMax();
+//		}
+//
+//		generator  = new BasicBlockInfoGenerator(bb)
+//
+//		Map<Integer, BasicBlockInfo> blocksInfo = ;
+//		Metadata md = new Metadata(Job.get().getId(),inputCluster,outptutCluster,new BoundingBox(interval), bsizes,blocksInfo);
+//
+//		File metadataFile = Job.get().file(i + "_metadata.json");
+//		MyLogger.log().info(md.toString());
+//
+//
+//
+//    }
+//
+//    public static void run(List<ParamsJsonSerialzer<?>> params, String input, TaskType type, Interval interval) throws SpimDataException, IOException, JSchException, SftpException {
 //		Job.create();
 //		String path = "";
 //		SpimData2 spimdata = new XmlIoSpimData2("").load(path);

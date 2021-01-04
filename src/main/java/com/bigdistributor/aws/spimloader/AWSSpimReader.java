@@ -1,4 +1,4 @@
-package com.bigdistributor.spimdata.aws.reader;
+package com.bigdistributor.aws.spimloader;
 
 import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
@@ -16,7 +16,8 @@ import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
 import java.io.*;
 
-public class AWSSpimReader {
+public class AWSSpimReader implements SpimDataLoader {
+
     private static final String defaultName = "dataset.xml";
 
     private final S3BucketInstance bucketInstance;
@@ -56,28 +57,31 @@ public class AWSSpimReader {
         return builder.build(reader);
     }
 
-    public SpimData2 getSpim() throws JDOMException, XMLStreamException, IOException, SpimDataException {
-        if (doc==null){
-            read();
-            return getSpim();
-        }
-        else{
-            return new XmlIoSpimData2("").fromXml(doc.getRootElement(),new File(""));
-        }
-    }
-
     public String getFile() {
         return fileName;
     }
 
-    public static void main(String[] args) throws IllegalAccessException, IOException, JDOMException, XMLStreamException {
-
-//        AWSCredentialInstance.init(DEFAULT.AWS_CREDENTIALS_PATH);
-//
-//        S3BucketInstance.init(AWSCredentialInstance.get(), Regions.EU_CENTRAL_1, DEFAULT.bucket_name);
-//
-//        Document xml = new AWSXMLReader2(S3BucketInstance.get(), "big/").read();
-//
-//        System.out.println(xml);
+    @Override
+    public SpimData2 getSpimdata() {
+        if (doc==null){
+            try {
+                read();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JDOMException e) {
+                e.printStackTrace();
+            } catch (XMLStreamException e) {
+                e.printStackTrace();
+            }
+            return getSpimdata();
+        }
+        else{
+            try {
+                return new XmlIoSpimData2("").fromXml(doc.getRootElement(),new File(""));
+            } catch (SpimDataException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
     }
 }

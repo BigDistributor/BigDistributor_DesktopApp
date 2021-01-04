@@ -1,7 +1,7 @@
-package com.bigdistributor.spimdata.aws.gui;
+package com.bigdistributor.gui.spim;
 
 import com.bigdistributor.dataexchange.job.model.Params;
-import com.bigdistributor.spimdata.aws.reader.AWSXmlIoSpimData2;
+import com.bigdistributor.aws.spimloader.AWSXmlIoSpimData2;
 import fiji.util.gui.GenericDialogPlus;
 import net.preibisch.mvrecon.fiji.plugin.queryXML.LoadParseQueryXML;
 
