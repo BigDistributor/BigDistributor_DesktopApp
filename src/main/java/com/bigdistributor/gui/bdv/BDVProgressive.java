@@ -11,6 +11,10 @@ import com.bigdistributor.aws.dataexchange.utils.AWS_DEFAULT;
 import com.bigdistributor.aws.spimloader.AWSSpimLoader;
 import com.bigdistributor.core.blockmanagement.blockinfo.BasicBlockInfo;
 import com.bigdistributor.core.metadata.MetadataGenerator;
+import com.bigdistributor.core.remote.mq.MQLogReceiveDispatchManager;
+import com.bigdistributor.core.remote.mq.entities.MQMessage;
+import com.bigdistributor.core.remote.mq.entities.MQTopic;
+import com.bigdistributor.core.remote.mq.entities.RemoteLogListener;
 import com.bigdistributor.core.spim.SpimDataLoader;
 import com.bigdistributor.core.task.JobID;
 import com.bigdistributor.core.task.items.Metadata;
@@ -26,7 +30,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class BDVProgressive {
+public class BDVProgressive implements RemoteLogListener {
     private static BDVProgressive instance;
     private final SpimData2 spimdata;
     private final Map<Integer, ARGBType> blocksStatus;
@@ -72,6 +76,7 @@ public class BDVProgressive {
         FunctionRandomAccessible<ARGBType> function = getFunction(metadata, blocksStatus);
         BdvStackSource<ARGBType> progressImage = BdvFunctions.show(function, metadata.getBb(), "", options);
         progressImage.setDisplayRange(0, 1000);
+        MQLogReceiveDispatchManager.addListener(this,true);
         return instance;
     }
 
@@ -155,4 +160,14 @@ public class BDVProgressive {
         System.out.println("Done");
     }
 
+    @Override
+    public void onLogAdded(MQMessage message) {
+        if(!message.getTopic().equals(MQTopic.LOG)){
+            if(message.getBlockId()>=0){
+                int blockId = message.getBlockId();
+                ARGBType color = ProgressColor.getColorFor(message.getTopic()).getRgb();
+                setColor(blockId,color);
+            }
+        }
+    }
 }

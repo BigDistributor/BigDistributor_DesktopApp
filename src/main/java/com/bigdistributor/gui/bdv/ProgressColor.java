@@ -1,5 +1,6 @@
 package com.bigdistributor.gui.bdv;
 
+import com.bigdistributor.core.remote.mq.entities.MQTopic;
 import net.imglib2.type.numeric.ARGBType;
 
 public enum ProgressColor {
@@ -17,6 +18,17 @@ public enum ProgressColor {
         this.a = a;
 
         this.code = argb(r, g, b);
+    }
+
+    public static ProgressColor getColorFor(MQTopic status) {
+        switch (status){
+            case LOG: return  NotStated;
+            case TASK_DONE: return Success;
+            case TASK_ERROR: return Error;
+            case  TASK_STARTED: return Processing;
+        }
+        System.out.println("Case color not implemented !");
+        return NotStated;
     }
 
     public int getCode() {
