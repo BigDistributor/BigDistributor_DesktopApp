@@ -1,13 +1,22 @@
 package com.bigdistributor.gui.wf;
 
 
+import com.amazonaws.auth.AWSCredentials;
+import com.amazonaws.services.lambda.model.InvokeResult;
 import com.bigdistributor.aws.AWSWorkflow;
+import com.bigdistributor.aws.dataexchange.aws.s3.func.auth.AWSCredentialInstance;
 import com.bigdistributor.aws.dataexchange.aws.s3.func.bucket.S3BucketInstance;
+import com.bigdistributor.aws.dataexchange.aws.s3.func.read.AWSReader;
 import com.bigdistributor.aws.dataexchange.utils.AWS_DEFAULT;
+import com.bigdistributor.aws.job.emr.EMRLambdaManager;
+import com.bigdistributor.aws.job.emr.EMRLambdaManagerParams;
 import com.bigdistributor.aws.spimloader.AWSSpimLoader;
 import com.bigdistributor.biglogger.adapters.Log;
 import com.bigdistributor.core.metadata.MetadataGenerator;
 import com.bigdistributor.core.spim.SpimDataLoader;
+import com.bigdistributor.core.task.JobID;
+import com.bigdistributor.core.task.items.Metadata;
+import com.bigdistributor.gui.bdv.BDVProgressive;
 import com.bigdistributor.gui.wf.items.*;
 import com.bigdistributor.helpers.TASK_DEFAULT;
 import com.bigdistributor.io.mvn.JarLooker;
@@ -25,6 +34,7 @@ public class AWSMenuView extends JFrame {
     private JPanel mainPanel;
 
     public AWSMenuView() {
+        JobID.createNew();
         initUI();
     }
 
@@ -89,6 +99,7 @@ public class AWSMenuView extends JFrame {
             try {
                 File file = new File(AWSWorkflow.get().getLocalJar());
                 S3BucketInstance.get().uploadFile(file);
+                AWSWorkflow.get().setClusterJar(file.getName());
             } catch (IllegalAccessException | InterruptedException illegalAccessException) {
                 logger.error(illegalAccessException.toString());
                 illegalAccessException.printStackTrace();
@@ -174,6 +185,12 @@ public class AWSMenuView extends JFrame {
 
         JMenu jobMenu = new JMenu("Job ");
         JMenuItem startJob = new JMenuItem("Start Job");
+        startJob.addActionListener(e -> {
+            EMRLambdaManagerParams params = new ClusterTaskView().show();
+            AWSCredentials credentials = AWSCredentialInstance.get();
+            InvokeResult result = new EMRLambdaManager(credentials, params).invoke();
+            PopupMessage.infoBox("Cluster started ! ", "Success "+result.getStatusCode());
+        });
 
         menuBar.add(jobMenu);
         jobMenu.add(startJob);
@@ -181,8 +198,25 @@ public class AWSMenuView extends JFrame {
 
         JMenu bdvMenu = new JMenu("BDV");
         JMenuItem startBDV = new JMenuItem("Start BDV");
-        JMenuItem showProgressBdv = new JMenuItem("Show Progress");
+        startBDV.addActionListener(e -> {
+            // Init XML
+            SpimDataLoader spimLoader = null;
+            try {
+                spimLoader = new AWSSpimLoader(S3BucketInstance.get(), "", AWSWorkflow.get().getClusterData());
+                Metadata md = Metadata.fromJsonString(new AWSReader(S3BucketInstance.get(),"",AWSWorkflow.get().getClusterMetada()).get());
+                BDVProgressive.init(spimLoader.getSpimdata(),md);
+                BDVProgressive.get().show();
+            } catch (Exception err) {
+                logger.error(err.toString());
+                err.printStackTrace();
+            }
 
+
+        });
+        JMenuItem showProgressBdv = new JMenuItem("Show Progress");
+        showProgressBdv.addActionListener(e -> {
+            BDVProgressive.get().showProgress();
+        });
         menuBar.add(bdvMenu);
         bdvMenu.add(startBDV);
         bdvMenu.add(showProgressBdv);
