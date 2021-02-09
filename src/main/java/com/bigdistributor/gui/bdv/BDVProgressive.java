@@ -48,7 +48,7 @@ public class BDVProgressive implements RemoteLogListener {
         return instance;
     }
 
-    public static BDVProgressive get() {
+    public static synchronized BDVProgressive get() {
         return instance;
     }
 

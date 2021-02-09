@@ -100,6 +100,8 @@ public class AWSMenuView extends JFrame {
                 File file = new File(AWSWorkflow.get().getLocalJar());
                 S3BucketInstance.get().uploadFile(file);
                 AWSWorkflow.get().setClusterJar(file.getName());
+
+                PopupMessage.infoBox("Task sent to S3 ! ", "Success ");
             } catch (IllegalAccessException | InterruptedException illegalAccessException) {
                 logger.error(illegalAccessException.toString());
                 illegalAccessException.printStackTrace();
@@ -108,7 +110,7 @@ public class AWSMenuView extends JFrame {
 
         JMenuItem configAwsTask = new JMenuItem("Config AWS Task");
         configAwsTask.addActionListener(e -> {
-            String file = new OneFileView("AWS Task", "Task name: ", AWS_DEFAULT.cloud_jar, OneFileView.FileType.String).show();
+            String file = new OneFileView("AWS Task", "Task name: ", AWS_DEFAULT.cloud_jar, OneFileView.FileType.Text).show();
             AWSWorkflow.get().setClusterJar(file);
         });
 
@@ -131,6 +133,7 @@ public class AWSMenuView extends JFrame {
                     try {
                         for (String f : AWSWorkflow.get().getLocalData())
                             S3BucketInstance.get().upload(new File(f));
+                        AWSWorkflow.get().setClusterData(new File(AWSWorkflow.get().getLocalData().get(0)).getName());
                         PopupMessage.infoBox("Files sent ! " + AWSWorkflow.get().getLocalData().size(), "Success");
                     } catch (IllegalAccessException | InterruptedException | IOException illegalAccessException) {
                         logger.error(illegalAccessException.toString());
@@ -141,13 +144,14 @@ public class AWSMenuView extends JFrame {
         );
         JMenuItem configAwsData = new JMenuItem("Config AWS Data");
         configAwsData.addActionListener(e -> {
-            String file = new OneFileView("AWS Data", "Spim XML name: ", "", OneFileView.FileType.String).show();
+            String file = new OneFileView("AWS Data", "Spim XML name: ", "", OneFileView.FileType.Text).show();
             AWSWorkflow.get().setClusterData(file);
         });
 
         JMenuItem generateMetadata = new JMenuItem("Generate metadata");
         generateMetadata.addActionListener(e -> {
             try {
+                logger.info("Cluster input:"+AWSWorkflow.get().getClusterData());
                 SpimDataLoader spimLoader = new AWSSpimLoader(S3BucketInstance.get(), "", AWSWorkflow.get().getClusterData());
                 MetadataGenerator metadataGenerator = new MetadataGenerator(spimLoader);
                 String MetadataPath = AWSWorkflow.get().setFile("metadata.xml");
@@ -161,8 +165,9 @@ public class AWSMenuView extends JFrame {
         });
 
         JMenuItem sendMetadata = new JMenuItem("Send metadata to S3");
-        sendDataToS3.addActionListener(e -> {
+        sendMetadata.addActionListener(e -> {
                     try {
+                        logger.info("start sending metadata");
                         File metadataFile = new File(AWSWorkflow.get().getMetadataPath());
                         S3BucketInstance.get().upload(metadataFile);
                         PopupMessage.infoBox("Metadata sent ! ", "Success");
@@ -199,8 +204,8 @@ public class AWSMenuView extends JFrame {
         JMenu bdvMenu = new JMenu("BDV");
         JMenuItem startBDV = new JMenuItem("Start BDV");
         startBDV.addActionListener(e -> {
-            // Init XML
-            SpimDataLoader spimLoader = null;
+            Thread thread = new Thread(() ->  {
+                    SpimDataLoader spimLoader = null;
             try {
                 spimLoader = new AWSSpimLoader(S3BucketInstance.get(), "", AWSWorkflow.get().getClusterData());
                 Metadata md = Metadata.fromJsonString(new AWSReader(S3BucketInstance.get(),"",AWSWorkflow.get().getClusterMetada()).get());
@@ -210,7 +215,9 @@ public class AWSMenuView extends JFrame {
                 logger.error(err.toString());
                 err.printStackTrace();
             }
+            });
 
+            thread.start();
 
         });
         JMenuItem showProgressBdv = new JMenuItem("Show Progress");

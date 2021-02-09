@@ -5,7 +5,7 @@ import fiji.util.gui.GenericDialogPlus;
 public class OneFileView {
 
     public enum FileType {
-        String, File, Folder, FileOrFolder;
+        Text, File, Folder, FileOrFolder;
     }
 
     private final String def;
@@ -26,15 +26,18 @@ public class OneFileView {
         switch (type) {
             case File:
                 gd.addFileField(label, def, 100);
+                break;
             case Folder:
                 gd.addDirectoryField(label, def, 100);
-            case String:
+                break;
+            case Text:
                 gd.addStringField(label, def, 100);
+                break;
             case FileOrFolder:
                 gd.addDirectoryOrFileField(label, def, 100);
+                break;
         }
 
-        gd.addMessage("");
 
         gd.showDialog();
 
@@ -43,5 +46,9 @@ public class OneFileView {
 
         String file = gd.getNextString();
         return file;
+    }
+
+    public static void main(String[] args) {
+        new OneFileView("AWS Task", "Task name: ", "", FileType.FileOrFolder).show();
     }
 }

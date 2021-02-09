@@ -29,13 +29,8 @@ public class S3BucketConfigurationView {
         AWSWorkflow.get().setCredentialsKeyPath(credentialsKeyPath);
         AWSWorkflow.get().setBucketName(bucketName);
 
-        try {
-            AWSCredentialInstance.init(credentialsKeyPath);
-            S3BucketInstance.init(AWSCredentialInstance.get(), Regions.EU_CENTRAL_1,bucketName);
-        } catch (IllegalAccessException e) {
-            logger.error(e.toString());
-            e.printStackTrace();
-        }
+        AWSCredentialInstance.init(credentialsKeyPath);
+        S3BucketInstance.init(AWSCredentialInstance.get(), Regions.EU_CENTRAL_1,bucketName);
 
         return;
 

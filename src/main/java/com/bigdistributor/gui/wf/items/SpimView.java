@@ -17,7 +17,7 @@ public class SpimView {
         final GenericDialogPlus gd = new GenericDialogPlus("Spim Input");
         gd.addFileField("XML: ", TASK_DEFAULT.xml_data, 45);
         gd.addMessage("");
-        gd.addFileField("RAW: ", TASK_DEFAULT.raw_data, 45);
+        gd.addDirectoryOrFileField("RAW: ", TASK_DEFAULT.raw_data, 45);
         gd.showDialog();
 
         if (gd.wasCanceled())
