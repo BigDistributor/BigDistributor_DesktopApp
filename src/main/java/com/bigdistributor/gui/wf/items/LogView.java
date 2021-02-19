@@ -18,6 +18,7 @@ public class LogView extends TerminalLogHandler {
         textArea = new JTextArea();
         textArea.setEditable(false);
         pane = new JScrollPane(textArea);
+        this.setLevel(level);
         pane.setMaximumSize(new Dimension(1000,300));
         LoggerManager.addHandler(this);
     }
@@ -28,8 +29,8 @@ public class LogView extends TerminalLogHandler {
 
     @Override
     public void publish(LogRecord record) {
-        if (record.getLevel().intValue()<level.intValue())
-            return;
+//        if (record.getLevel().intValue()<level.intValue())
+//            return;
         final String msg;
         if (getFormatter() == null) {
             msg = this.defaultFormatter.format(record);

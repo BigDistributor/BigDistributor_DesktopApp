@@ -1,13 +1,19 @@
 package com.bigdistributor.gui.wf.items;
 
 import com.bigdistributor.aws.AWSWorkflow;
+import com.bigdistributor.aws.dataexchange.aws.s3.func.auth.AWSCredentialInstance;
 import com.bigdistributor.aws.job.JarParams;
 import com.bigdistributor.aws.job.emr.EMRLambdaManagerParams;
 import com.bigdistributor.core.task.JobID;
 import com.bigdistributor.helpers.TASK_DEFAULT;
 import fiji.util.gui.GenericDialogPlus;
 
+import javax.swing.*;
+
 public class ClusterTaskView {
+    private EMRLambdaManagerParams params;
+    private JLabel testLabel = new JLabel("");
+
     public EMRLambdaManagerParams show() {
         final GenericDialogPlus gd = new GenericDialogPlus("Start Cluster Task");
 
@@ -27,9 +33,13 @@ public class ClusterTaskView {
 
         gd.addStringField("Cluster name:", "Task_" + JobID.get(), 30);
 
-
-//        gd.addDirectoryField("Output maven: ", TASK_DEFAULT.outputMaven, 100);
         gd.addMessage("");
+        gd.addButton("Test", e -> {
+            if (params!=null)
+                testLabel.setText(params.toString());
+        });
+
+        gd.add(testLabel);
 
         gd.showDialog();
 
@@ -48,11 +58,14 @@ public class ClusterTaskView {
         String taskParams = gd.getNextString();
         String clustername = gd.getNextString();
         JobID.set(jobid);
-        EMRLambdaManagerParams params = new EMRLambdaManagerParams(taskFile, clustername,
+        AWSWorkflow.get().setClusterMetadata(metadata);
+        AWSWorkflow.get().setClusterCredentials(clustername);
+
+        params = new EMRLambdaManagerParams(taskFile, clustername,
                 new JarParams(taskType, jobid, bucketName,
                         input,
                         output, metadata,
-                        taskParams), instances);
+                        taskParams, AWSCredentialInstance.get()), instances);
         return params;
 
     }
