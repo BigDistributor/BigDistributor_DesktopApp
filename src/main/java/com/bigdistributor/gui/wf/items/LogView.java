@@ -29,20 +29,24 @@ public class LogView extends TerminalLogHandler {
 
     @Override
     public void publish(LogRecord record) {
-//        if (record.getLevel().intValue()<level.intValue())
-//            return;
-        final String msg;
-        if (getFormatter() == null) {
-            msg = this.defaultFormatter.format(record);
-        } else {
-            msg = getFormatter().format(record);
-        }
-        try {
-            textArea.getDocument().insertString(0,msg+"\n",null);
-        } catch (BadLocationException e) {
-            textArea.append(msg);
-            e.printStackTrace();
-        }
+        new Thread(() -> {
+            final String msg;
+            if (getFormatter() == null) {
+                msg = defaultFormatter.format(record);
+            } else {
+                msg = getFormatter().format(record);
+            }
+            try {
+                textArea.getDocument().insertString(0, msg + "\n", null);
+            } catch (BadLocationException e) {
+                textArea.append(msg);
+                e.printStackTrace();
+            }
+            textArea.update(textArea.getGraphics());
+//            textArea.validate();
+//            pane.validate();
+//            pane.getRootPane().validate();
+        }).start();
     }
 
 }

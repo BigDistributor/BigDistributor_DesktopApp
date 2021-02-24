@@ -8,10 +8,8 @@ import com.bigdistributor.aws.dataexchange.utils.AWS_DEFAULT;
 import com.bigdistributor.biglogger.adapters.Log;
 import fiji.util.gui.GenericDialogPlus;
 
-import java.lang.invoke.MethodHandles;
-
 public class S3BucketConfigurationView {
-    private static final Log logger = Log.getLogger(MethodHandles.lookup().lookupClass().getSimpleName());
+    private static final Log logger = Log.getLogger( S3BucketConfigurationView.class.getName());
 
     public void show() {
         final GenericDialogPlus gd = new GenericDialogPlus("AWS S3 Input");
@@ -25,12 +23,14 @@ public class S3BucketConfigurationView {
 
         String credentialsKeyPath = gd.getNextString();
         String bucketName = gd.getNextString();
+        logger.info("Bucket name: " + bucketName);
+        logger.info("Credential path: " + credentialsKeyPath);
 
         AWSWorkflow.get().setCredentialsKeyPath(credentialsKeyPath);
         AWSWorkflow.get().setBucketName(bucketName);
 
         AWSCredentialInstance.init(credentialsKeyPath);
-        S3BucketInstance.init(AWSCredentialInstance.get(), Regions.EU_CENTRAL_1,bucketName);
+        S3BucketInstance.init(AWSCredentialInstance.get(), Regions.EU_CENTRAL_1, bucketName);
 
         return;
 

@@ -19,6 +19,8 @@ import com.bigdistributor.gui.wf.items.*;
 import com.bigdistributor.helpers.TASK_DEFAULT;
 import com.bigdistributor.io.mvn.JarLooker;
 import com.bigdistributor.io.mvn.MavenCompiler;
+import com.bigdistributor.local.JarExecutor;
+import com.bigdistributor.local.LocalTaskParams;
 
 import java.io.File;
 import java.io.IOException;
@@ -51,11 +53,17 @@ public class HeadlessWorkflowFunctions {
         }
     }
 
-    public static void startJob() {
+    public static void startAWSJob() {
         EMRLambdaManagerParams params = new ClusterTaskView().show();
         AWSCredentials credentials = AWSCredentialInstance.get();
         InvokeResult result = new EMRLambdaManager(credentials, params).invoke();
         PopupMessage.infoBox("Cluster started ! ", "Success " + result.getStatusCode());
+    }
+
+    public static void startLocalJob() {
+        LocalTaskParams params = new LocalTaskView().show();
+    new JarExecutor(params).run();
+        PopupMessage.infoBox("Local started ! ", "Success ");
     }
 
     public static void sendMetadataToS3() {
@@ -141,5 +149,9 @@ public class HeadlessWorkflowFunctions {
     public static void configLocalTask() {
         String file = new OneFileView("Local Task", "Task Path", TASK_DEFAULT.jar, OneFileView.FileType.File).show();
         AWSWorkflow.get().setLocalJar(file);
+    }
+
+    public static void configS3Bucket() {
+        new S3BucketConfigurationView().show();
     }
 }
