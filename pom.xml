@@ -8,15 +8,23 @@
     <artifactId>BigDistributer_DesktopApp</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-    <name>Maven Task AWS</name>
-    <description>Needed library for task, just import and implement</description>
+    <name>BigDistributor Desktop Application</name>
+    <description>GUI desktop Application</description>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+        <maven-enforcer-plugin.version>3.0.0-M3</maven-enforcer-plugin.version>
+
+        <BigStitcher.version>0.7.0</BigStitcher.version>
+
+        <BigDistributor_AWS.version>0.2-SNAPSHOT</BigDistributor_AWS.version>
+        <BigDistributor-core.version>0.1-SNAPSHOT</BigDistributor-core.version>
+        <AWS_DataExchange.version>0.1-SNAPSHOT</AWS_DataExchange.version>
+
+        <n5-aws-s3.version>3.2.0</n5-aws-s3.version>
     </properties>
     <repositories>
-        <!-- NB: for project parent -->
         <repository>
             <id>imagej.public</id>
             <url>http://maven.imagej.net/content/groups/public</url>
@@ -26,17 +34,22 @@
         <dependency>
             <groupId>com.bigdistributor</groupId>
             <artifactId>BigDistributor_AWS</artifactId>
-            <version>0.2-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>net.preibisch</groupId>
             <artifactId>BigStitcher</artifactId>
-            <version>0.7.0</version>
         </dependency>
         <dependency>
             <groupId>com.bigdistributor</groupId>
-            <version>0.1-SNAPSHOT</version>
             <artifactId>BigDistributor-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.bigdistributor</groupId>
+            <artifactId>AWS_DataExchange</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.janelia.saalfeldlab</groupId>
+            <artifactId>n5-aws-s3</artifactId>
         </dependency>
     </dependencies>
 </project>
