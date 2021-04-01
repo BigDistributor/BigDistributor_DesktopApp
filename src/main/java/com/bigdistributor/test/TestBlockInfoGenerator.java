@@ -1,4 +1,4 @@
-package com.bigdistributor.plugin;
+package com.bigdistributor.test;
 
 import com.bigdistributor.core.blockmanagement.blockinfo.BasicBlockInfo;
 import com.bigdistributor.core.blockmanagement.blockinfo.BasicBlockInfoGenerator;

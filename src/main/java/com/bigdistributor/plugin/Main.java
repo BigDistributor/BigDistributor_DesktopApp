@@ -17,6 +17,6 @@ public class Main extends BigDistributorMainApp {
     }
 
     public static void main(String[] args) {
-        EventQueue.invokeLater(() -> ((Runnable) () -> new AWSMenuView().setVisible(true)).run());
+        EventQueue.invokeLater(() -> new AWSMenuView().setVisible(true));
     }
 }

@@ -3,7 +3,7 @@ package com.bigdistributor.gui.wf;
 
 import com.bigdistributor.biglogger.adapters.Log;
 import com.bigdistributor.core.task.JobID;
-import com.bigdistributor.gui.bdv.BDVProgressive;
+import com.bigdistributor.gui.wf.fn.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -42,10 +42,10 @@ public class AWSMenuView extends JFrame {
         JMenu awsmenu = new JMenu("AWS");
 
         JMenuItem configAws = new JMenuItem("Config S3");
-        configAws.addActionListener(e -> ((Runnable) () -> HeadlessWorkflowFunctions.configS3Bucket()).run());
+        configAws.addActionListener(e -> run(new S3BucketConfigurator()));
 
         JMenuItem createBucket = new JMenuItem("Create bucket");
-        createBucket.addActionListener(e -> ((Runnable) () -> HeadlessWorkflowFunctions.createBucket()).run());
+        createBucket.addActionListener(e -> run(new BucketCreator()));
 
         menuBar.add(awsmenu);
         awsmenu.add(configAws);
@@ -53,16 +53,15 @@ public class AWSMenuView extends JFrame {
 
         JMenu taskMenu = new JMenu("Task");
         JMenuItem configLocalTask = new JMenuItem("Config Local Task");
-        configLocalTask.addActionListener(e -> ((Runnable) () -> HeadlessWorkflowFunctions.configLocalTask()).run());
+        configLocalTask.addActionListener(e -> run(new LocalTaskConfigurator()));
 
         JMenuItem compileTask = new JMenuItem("Compile");
-        compileTask.addActionListener(e -> ((Runnable) () -> HeadlessWorkflowFunctions.compileTask()).run());
+        compileTask.addActionListener(e -> run(new TaskCompiler()));
         JMenuItem sendTaskToS3 = new JMenuItem("Send Task to S3");
-        sendTaskToS3.addActionListener(e -> ((Runnable) () -> HeadlessWorkflowFunctions.sendTaskToS3()).run());
+        sendTaskToS3.addActionListener(e -> run(new TaskS3Sender()));
 
         JMenuItem configAwsTask = new JMenuItem("Config AWS Task");
-        configAwsTask.addActionListener(e -> ((Runnable) () -> HeadlessWorkflowFunctions.configAWSTask()).run());
-
+        configAwsTask.addActionListener(e -> run(new AWSTaskConfigurator()));
         menuBar.add(taskMenu);
         taskMenu.add(configLocalTask);
         taskMenu.add(compileTask);
@@ -72,19 +71,19 @@ public class AWSMenuView extends JFrame {
 
         JMenu dataMenu = new JMenu("Data");
         JMenuItem configLocalData = new JMenuItem("Config Local Data");
-        configLocalData.addActionListener(e -> ((Runnable) () -> HeadlessWorkflowFunctions.configLocalData()).run());
+        configLocalData.addActionListener(e -> run(new LocalDataConfigurator()));
 
         JMenuItem sendDataToS3 = new JMenuItem("Send Data to S3");
-        sendDataToS3.addActionListener(e -> ((Runnable) () -> HeadlessWorkflowFunctions.sendDataToS3()).run());
+        sendDataToS3.addActionListener(e -> run(new DataS3Sender()));
 
         JMenuItem configAwsData = new JMenuItem("Config AWS Data");
-        configAwsData.addActionListener(e -> ((Runnable) () -> HeadlessWorkflowFunctions.configAWSData()).run());
+        configAwsData.addActionListener(e -> run(new AWSDataConfigurator()));
 
         JMenuItem generateMetadata = new JMenuItem("Generate metadata");
-        generateMetadata.addActionListener(e -> ((Runnable) () -> HeadlessWorkflowFunctions.generateMetadata()).run());
+        generateMetadata.addActionListener(e -> run(new MetadataFileGenerator()));
 
         JMenuItem sendMetadata = new JMenuItem("Send metadata to S3");
-        sendMetadata.addActionListener(e -> ((Runnable) () -> HeadlessWorkflowFunctions.sendMetadataToS3()).run());
+        sendMetadata.addActionListener(e -> run(new MetadataS3Sender()));
 
         menuBar.add(dataMenu);
         dataMenu.add(configLocalData);
@@ -98,9 +97,10 @@ public class AWSMenuView extends JFrame {
         JMenu jobMenu = new JMenu("Job ");
 
         JMenuItem startAWSJob = new JMenuItem("Start AWS Job");
-        startAWSJob.addActionListener(e -> ((Runnable) () -> HeadlessWorkflowFunctions.startAWSJob()).run());
+
+        startAWSJob.addActionListener(e -> run(new AWSJobStarter()));
         JMenuItem startLocalJob = new JMenuItem("Start Local Job");
-        startLocalJob.addActionListener(e -> ((Runnable) () -> HeadlessWorkflowFunctions.startLocalJob()).run());
+        startLocalJob.addActionListener(e -> run(new LocalJobStarter()));
 
         menuBar.add(jobMenu);
         jobMenu.add(startAWSJob);
@@ -109,10 +109,10 @@ public class AWSMenuView extends JFrame {
         JMenu bdvMenu = new JMenu("BDV");
 
         JMenuItem startBDV = new JMenuItem("Start BDV");
-        startBDV.addActionListener(e -> ((Runnable) () -> HeadlessWorkflowFunctions.startBDV()).run());
+        startBDV.addActionListener(e -> run(new BDVCreator()));
 
         JMenuItem showProgressBdv = new JMenuItem("Show Progress");
-        showProgressBdv.addActionListener(e -> ((Runnable) () -> BDVProgressive.get().showProgress()).run());
+        showProgressBdv.addActionListener(e -> run(new BDVProgressMentor()));
 
         menuBar.add(bdvMenu);
         bdvMenu.add(startBDV);
@@ -120,6 +120,10 @@ public class AWSMenuView extends JFrame {
 
         setJMenuBar(menuBar);
 
+    }
+
+    public void run(HeadlessFunction function) {
+        FunctionsExecutor.run(function);
     }
 
 }

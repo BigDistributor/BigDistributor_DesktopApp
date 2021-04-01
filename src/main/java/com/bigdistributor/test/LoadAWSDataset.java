@@ -1,4 +1,4 @@
-package com.bigdistributor.plugin;
+package com.bigdistributor.test;
 
 import com.bigdistributor.gui.spim.AWSLoadParseQueryXML;
 import ij.ImageJ;

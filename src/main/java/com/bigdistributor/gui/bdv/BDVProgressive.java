@@ -7,8 +7,8 @@ import bdv.util.BdvStackSource;
 import com.amazonaws.regions.Regions;
 import com.bigdistributor.aws.dataexchange.aws.s3.func.auth.AWSCredentialInstance;
 import com.bigdistributor.aws.dataexchange.aws.s3.func.bucket.S3BucketInstance;
-import com.bigdistributor.aws.dataexchange.utils.AWS_DEFAULT;
 import com.bigdistributor.aws.spimloader.AWSSpimLoader;
+import com.bigdistributor.aws.utils.AWS_DEFAULT;
 import com.bigdistributor.core.blockmanagement.blockinfo.BasicBlockInfo;
 import com.bigdistributor.core.metadata.MetadataGenerator;
 import com.bigdistributor.core.remote.mq.MQLogReceiveDispatchManager;
@@ -29,6 +29,8 @@ import net.preibisch.mvrecon.fiji.spimdata.boundingbox.BoundingBox;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class BDVProgressive implements RemoteLogListener {
     private static BDVProgressive instance;
@@ -55,7 +57,7 @@ public class BDVProgressive implements RemoteLogListener {
     public BDVProgressive show() {
         options = Bdv.options().numSourceGroups(2).frameTitle("Data with Progress");
         mainImages = BdvFunctions.show(spimdata, options);
-        mainImages.forEach(bdvStackSource -> bdvStackSource.setDisplayRange(0, 100));
+        mainImages.forEach(bdvStackSource -> bdvStackSource.setDisplayRange(0, 1200));
         options.addTo(mainImages.get(0));
         return instance;
     }
@@ -75,7 +77,7 @@ public class BDVProgressive implements RemoteLogListener {
     public BDVProgressive showProgress() {
         FunctionRandomAccessible<ARGBType> function = getFunction(metadata, blocksStatus);
         BdvStackSource<ARGBType> progressImage = BdvFunctions.show(function, metadata.getBb(), "", options);
-        progressImage.setDisplayRange(0, 1000);
+        progressImage.setDisplayRange(0, 500);
         MQLogReceiveDispatchManager.addListener(this,true);
         return instance;
     }
@@ -111,6 +113,7 @@ public class BDVProgressive implements RemoteLogListener {
     }
 
     public void setColor(Integer blockId, ARGBType color) {
+        System.out.println("Set color "+blockId+" "+color.toString());
         blocksStatus.get(blockId).set(color);
     }
 
@@ -144,10 +147,10 @@ public class BDVProgressive implements RemoteLogListener {
         // We get this information from user
         AWSCredentialInstance.init(AWS_DEFAULT.AWS_CREDENTIALS_PATH);
 
-        S3BucketInstance.init(AWSCredentialInstance.get(), Regions.EU_CENTRAL_1, AWS_DEFAULT.bucket_name);
+        S3BucketInstance.init(AWSCredentialInstance.get(), Regions.EU_CENTRAL_1, "bigstitcher","data");
 
         // Init XML
-        SpimDataLoader spimLoader = new AWSSpimLoader(S3BucketInstance.get(), "", "dataset-n5.xml");
+        SpimDataLoader spimLoader = new AWSSpimLoader(S3BucketInstance.get(), "data", "dataset-n5.xml");
 
         MetadataGenerator metadataGenerator = new MetadataGenerator(spimLoader);
 
@@ -156,6 +159,21 @@ public class BDVProgressive implements RemoteLogListener {
         BDVProgressive.init(spimLoader.getSpimdata(),md);
 
         BDVProgressive.get().show().showProgress();
+
+        AtomicInteger pos = new AtomicInteger();
+        new Thread(() -> {
+            while(true) {
+                int x = new Random().nextInt(14);
+                try {
+                    Thread.sleep(x);
+                    BDVProgressive.get().onLogAdded(new MQMessage(MQTopic.TASK_DONE, "0", pos.get(), ""));
+                    pos.getAndIncrement();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }).start();
 
         System.out.println("Done");
     }

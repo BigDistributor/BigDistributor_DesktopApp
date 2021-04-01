@@ -1,9 +1,9 @@
 package com.bigdistributor.gui.wf.items;
 
-import com.bigdistributor.aws.AWSWorkflow;
+import com.bigdistributor.aws.job.utils.AWSWorkflow;
 import com.bigdistributor.aws.dataexchange.aws.s3.func.auth.AWSCredentialInstance;
-import com.bigdistributor.aws.job.JarParams;
-import com.bigdistributor.aws.job.emr.EMRLambdaManagerParams;
+import com.bigdistributor.aws.job.utils.JarParams;
+import com.bigdistributor.aws.job.aws.emr.EMRLambdaManagerParams;
 import com.bigdistributor.core.task.JobID;
 import com.bigdistributor.helpers.TASK_DEFAULT;
 import fiji.util.gui.GenericDialogPlus;

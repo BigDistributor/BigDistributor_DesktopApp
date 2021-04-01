@@ -12,6 +12,7 @@
     <description>GUI desktop Application</description>
 
     <properties>
+        <enforcer.skip>true</enforcer.skip>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven-enforcer-plugin.version>3.0.0-M3</maven-enforcer-plugin.version>
@@ -34,22 +35,27 @@
         <dependency>
             <groupId>com.bigdistributor</groupId>
             <artifactId>BigDistributor_AWS</artifactId>
+            <version>${BigDistributor_AWS.version}</version>
         </dependency>
         <dependency>
             <groupId>net.preibisch</groupId>
             <artifactId>BigStitcher</artifactId>
+            <version>${BigStitcher.version}</version>
         </dependency>
         <dependency>
             <groupId>com.bigdistributor</groupId>
             <artifactId>BigDistributor-core</artifactId>
+            <version>${BigDistributor-core.version}</version>
         </dependency>
         <dependency>
             <groupId>com.bigdistributor</groupId>
             <artifactId>AWS_DataExchange</artifactId>
+            <version>${AWS_DataExchange.version}</version>
         </dependency>
         <dependency>
             <groupId>org.janelia.saalfeldlab</groupId>
             <artifactId>n5-aws-s3</artifactId>
+            <version>${n5-aws-s3.version}</version>
         </dependency>
     </dependencies>
 </project>
