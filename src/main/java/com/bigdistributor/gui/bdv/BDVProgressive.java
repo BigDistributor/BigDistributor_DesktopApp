@@ -150,7 +150,7 @@ public class BDVProgressive implements RemoteLogListener {
         S3BucketInstance.init(AWSCredentialInstance.get(), Regions.EU_CENTRAL_1, "bigstitcher","data");
 
         // Init XML
-        SpimDataLoader spimLoader = new AWSSpimLoader(S3BucketInstance.get(), "data", "dataset-n5.xml");
+        SpimDataLoader spimLoader =  AWSSpimLoader.init(S3BucketInstance.get().getS3(), "s3://bigstitcher/data/dataset-n5.xml");
 
         MetadataGenerator metadataGenerator = new MetadataGenerator(spimLoader);
 

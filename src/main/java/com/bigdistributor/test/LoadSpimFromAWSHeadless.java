@@ -4,8 +4,8 @@ import bdv.img.aws.AWSSpimImageLoader;
 import com.amazonaws.regions.Regions;
 import com.bigdistributor.aws.dataexchange.aws.s3.func.auth.AWSCredentialInstance;
 import com.bigdistributor.aws.dataexchange.aws.s3.func.bucket.S3BucketInstance;
-import com.bigdistributor.aws.utils.AWS_DEFAULT;
 import com.bigdistributor.aws.spimloader.AWSSpimLoader;
+import com.bigdistributor.aws.utils.AWS_DEFAULT;
 import net.imglib2.RandomAccessibleInterval;
 import net.imglib2.img.display.imagej.ImageJFunctions;
 import net.imglib2.type.numeric.integer.UnsignedShortType;
@@ -21,7 +21,7 @@ public class LoadSpimFromAWSHeadless {
         S3BucketInstance.init(AWSCredentialInstance.get(), Regions.EU_CENTRAL_1, AWS_DEFAULT.bucket_name,"");
 
         // Init XML
-        AWSSpimLoader reader = new AWSSpimLoader(S3BucketInstance.get(),"","dataset-n5.xml");
+        AWSSpimLoader reader = AWSSpimLoader.init(S3BucketInstance.get().getS3(),"s3://mzouink-test/dataset-n5.xml");
 
         //Init Spim
 

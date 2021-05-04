@@ -23,7 +23,7 @@ public class ClusterTaskView {
         gd.addStringField("Output:", JobID.get() + ".n5", 30);
         gd.addMessage("");
         gd.addStringField("Job ID: ", JobID.get(), 40);
-        gd.addStringField("Bucket Name:", AWSWorkflow.get().getBucketName(), 50);
+//        gd.addStringField("Bucket Name:", AWSWorkflow.get().getBucketName(), 50);
         gd.addStringField("Task File:", AWSWorkflow.get().getFullPathClusterJar(), 100);
         gd.addStringField("Input:", AWSWorkflow.get().getClusterData(), 30);
 
@@ -57,7 +57,7 @@ public class ClusterTaskView {
         int instances = (int) gd.getNextNumber();
         String output = gd.getNextString();
         String jobid = gd.getNextString();
-        String bucketName = gd.getNextString();
+//        String bucketName = gd.getNextString();
         String taskFile = gd.getNextString();
         String input = gd.getNextString();
         String metadata = gd.getNextString();
@@ -67,7 +67,7 @@ public class ClusterTaskView {
         AWSWorkflow.get().setClusterMetadata(metadata);
 
         EMRLambdaManagerParams params = new EMRLambdaManagerParams(taskFile, clustername,
-                new JarParams(taskType, jobid, bucketName,
+                new JarParams(taskType, jobid,
                         input,
                         output, metadata,
                         taskParams, AWSCredentialInstance.get()), instances);

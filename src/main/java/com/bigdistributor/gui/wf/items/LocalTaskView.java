@@ -22,7 +22,7 @@ public class LocalTaskView {
         gd.addStringField("Output:", JobID.get() + ".n5", 30);
         gd.addMessage("");
         gd.addStringField("Job ID: ", JobID.get(), 40);
-        gd.addStringField("Bucket Name:", AWSWorkflow.get().getBucketName(), 50);
+//        gd.addStringField("Bucket Name:", AWSWorkflow.get().getBucketName(), 50);
         gd.addStringField("Task File:", AWSWorkflow.get().getLocalJar(), 100);
         gd.addStringField("Input:", AWSWorkflow.get().getClusterData(), 30);
 
@@ -47,7 +47,7 @@ public class LocalTaskView {
         String taskType = gd.getNextChoice();
         String output = gd.getNextString();
         String jobid = gd.getNextString();
-        String bucketName = gd.getNextString();
+//        String bucketName = gd.getNextString();
         String taskFile = gd.getNextString();
         String input = gd.getNextString();
         String metadata = gd.getNextString();
@@ -56,7 +56,7 @@ public class LocalTaskView {
         AWSWorkflow.get().setClusterMetadata(metadata);
 
         LocalTaskParams params = new LocalTaskParams(taskFile,
-                new JarParams(taskType, jobid, bucketName,
+                new JarParams(taskType, jobid,
                         input,
                         output, metadata,
                         taskParams, AWSCredentialInstance.get()));

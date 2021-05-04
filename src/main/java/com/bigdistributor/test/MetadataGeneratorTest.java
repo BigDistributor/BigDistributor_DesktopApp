@@ -22,7 +22,7 @@ public class MetadataGeneratorTest {
         Log.setLevel(Level.INFO);
         AWSCredentialInstance.init(AWS_DEFAULT.AWS_CREDENTIALS_PATH);
         S3BucketInstance.init(AWSCredentialInstance.get(), Regions.EU_CENTRAL_1, AWS_DEFAULT.bucket_name,"");
-        SpimDataLoader spimLoader = new AWSSpimLoader(S3BucketInstance.get(), "", input);
+        SpimDataLoader spimLoader = AWSSpimLoader.init(S3BucketInstance.get().getS3(), "s3://mzouink-test/"+ input);
         MetadataGenerator metadataGenerator = new MetadataGenerator(spimLoader);
         File metadataFile = new File(metadata);
         metadataGenerator.generate().save(metadataFile);

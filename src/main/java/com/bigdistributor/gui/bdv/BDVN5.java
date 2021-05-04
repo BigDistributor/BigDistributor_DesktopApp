@@ -21,16 +21,17 @@ import org.janelia.saalfeldlab.n5.s3.N5AmazonS3Reader;
 import java.io.IOException;
 
 public class BDVN5 {
+//    "s3://bigstitcher/data/dataset.n5/setup11/timepoint0/s0/"
     public static <T extends NativeType<T> & RealType<T>>  void main(String[] args) throws IOException {
-        String path = "Process_128.n5";
-        String n5Dataset = "volumes/raw/";
+        String path = "data/dataset.n5";
+        String n5Dataset = "setup11/timepoint0/s0/";
         AWSCredentialInstance.init(AWS_DEFAULT.AWS_CREDENTIALS_PATH);
-        String bucketName = "mzouink-test";
+        String bucketName = "bigstitcher";
         AmazonS3 s3 = S3BucketInstance.init(AWSCredentialInstance.get(), Regions.EU_CENTRAL_1, bucketName, "").getS3();
 
         N5Reader reader = new N5AmazonS3Reader(s3,bucketName,path);
         System.out.println(reader.getVersion());
-        System.out.println(reader.getGroupSeparator());
+//        System.out.println(reader.getGroupSeparator());
         final RandomAccessibleInterval<T> img = N5Utils.openVolatile(reader, n5Dataset);
 
         Cursor<T> cursor = Views.flatIterable(img).cursor();
@@ -55,7 +56,7 @@ public class BDVN5 {
         BdvStackSource<?> bdv = BdvFunctions.show(
                 VolatileViews.wrapAsVolatile(img,queue),
                 n5Dataset);
-        bdv.setDisplayRange(0, 100);
+        bdv.setDisplayRange(0, 3000);
 //        bdv.setDisplayRange(24000, 32000);
 
     }

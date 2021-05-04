@@ -3,54 +3,39 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
+    <parent>
+        <groupId>com.bigdistributor</groupId>
+        <artifactId>BigDistributor-pom</artifactId>
+        <version>0.3</version>
+        <relativePath/>
+    </parent>
     <groupId>com.bigdistributor</groupId>
     <artifactId>BigDistributer_DesktopApp</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>${revision}</version>
 
     <name>BigDistributor Desktop Application</name>
     <description>GUI desktop Application</description>
 
-    <properties>
-        <enforcer.skip>true</enforcer.skip>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-        <maven-enforcer-plugin.version>3.0.0-M3</maven-enforcer-plugin.version>
-
-        <BigStitcher.version>0.7.0</BigStitcher.version>
-
-        <BigDistributor_AWS.version>0.2-SNAPSHOT</BigDistributor_AWS.version>
-        <BigDistributor-core.version>0.1-SNAPSHOT</BigDistributor-core.version>
-        <AWS_DataExchange.version>0.1-SNAPSHOT</AWS_DataExchange.version>
-
-        <n5-aws-s3.version>3.2.0</n5-aws-s3.version>
-    </properties>
-    <repositories>
-        <repository>
-            <id>imagej.public</id>
-            <url>http://maven.imagej.net/content/groups/public</url>
-        </repository>
-    </repositories>
     <dependencies>
         <dependency>
             <groupId>com.bigdistributor</groupId>
+            <artifactId>BigDistributor-core</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.bigdistributor</groupId>
+            <artifactId>AWS_DataExchange</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.bigdistributor</groupId>
             <artifactId>BigDistributor_AWS</artifactId>
-            <version>${BigDistributor_AWS.version}</version>
+            <version>${revision}</version>
         </dependency>
         <dependency>
             <groupId>net.preibisch</groupId>
             <artifactId>BigStitcher</artifactId>
             <version>${BigStitcher.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.bigdistributor</groupId>
-            <artifactId>BigDistributor-core</artifactId>
-            <version>${BigDistributor-core.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.bigdistributor</groupId>
-            <artifactId>AWS_DataExchange</artifactId>
-            <version>${AWS_DataExchange.version}</version>
         </dependency>
         <dependency>
             <groupId>org.janelia.saalfeldlab</groupId>

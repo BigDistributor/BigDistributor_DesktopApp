@@ -1,5 +1,6 @@
 package com.bigdistributor.main.workflow;
 
+import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.regions.Regions;
 import com.bigdistributor.aws.dataexchange.aws.s3.func.auth.AWSCredentialInstance;
 import com.bigdistributor.aws.dataexchange.aws.s3.func.bucket.S3BucketInstance;
@@ -19,12 +20,12 @@ public class MetadataTest {
 
         JobID.createNew();
         // We get this information from user
-        AWSCredentialInstance.init(AWS_DEFAULT.AWS_CREDENTIALS_PATH);
+        AWSCredentials cred = AWSCredentialInstance.init(AWS_DEFAULT.AWS_CREDENTIALS_PATH).get();
 
-        S3BucketInstance.init(AWSCredentialInstance.get(), Regions.EU_CENTRAL_1, AWS_DEFAULT.bucket_name,"");
+        S3BucketInstance s3 = S3BucketInstance.init(AWSCredentialInstance.get(), Regions.EU_CENTRAL_1, AWS_DEFAULT.bucket_name, "").get();
 
         // Init XML
-        SpimDataLoader spimLoader = new AWSSpimLoader(S3BucketInstance.get(), "", "dataset-n5.xml");
+        SpimDataLoader spimLoader = AWSSpimLoader.init(s3.getS3(), "s3://mzouink-test/dataset-n5.xml");
 
         MetadataGenerator metadataGenerator = new MetadataGenerator(spimLoader);
 

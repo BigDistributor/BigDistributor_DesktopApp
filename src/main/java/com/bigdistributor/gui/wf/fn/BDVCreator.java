@@ -11,7 +11,7 @@ import com.bigdistributor.gui.bdv.BDVProgressive;
 public class BDVCreator implements HeadlessFunction {
     @Override
     public void start() throws Exception {
-        SpimDataLoader spimLoader = new AWSSpimLoader(S3BucketInstance.get(), "", AWSWorkflow.get().getClusterData());
+        SpimDataLoader spimLoader = AWSSpimLoader.init(S3BucketInstance.get().getS3(), "s3://"+S3BucketInstance.get().getBucketName()+"/"+ AWSWorkflow.get().getClusterData());
         Metadata md = Metadata.fromJsonString(new AWSReader(S3BucketInstance.get(), "", AWSWorkflow.get().getClusterMetada()).get());
         BDVProgressive.init(spimLoader.getSpimdata(), md);
         BDVProgressive.get().show();
